@@ -1,7 +1,5 @@
 # Optimization - TEL414
 
-Exercises for the course "Optimization TEL 414"
-
 ## Exercises
 
 >   <a href = "https://github.com/atzel-ov/Optimization/tree/main/Set1">Convex Sets and Functions</a> - Analyzing and prooving convexity whether a set or a function is convex.
