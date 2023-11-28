@@ -3,12 +3,12 @@ close all
 clc
 
 %% Construction of Quadratic Function
-n = 2;
+n = 200;
 
 A = randn(n,n);
 [U,S,V] = svd(A);
 
-L = 10;
+L = 100;
 l = 1;
 
 z = l + (L - l)*rand(n-2,1);
@@ -51,7 +51,7 @@ plot(y2, x, 'm--', LineWidth=1.3)
 axis([-7 7 -7 7])
 end
 
-x0 = 4*ones(n,1);
+x0 = -4*ones(n,1);
 epsilon = 10^-6;
 
 [x_opt1, p_opt1, rec1] = gradient_algorithm(P, q, x0, epsilon, @(x)projection_b(a,b,x));
@@ -78,7 +78,7 @@ plot(y2, x, 'm--', LineWidth=1.3)
 axis([-7 7 -7 7])
 end
 
-x0 = 4*ones(n,1);
+x0 = -4*ones(n,1);
 epsilon = 10^-6;
 beta = (sqrt(L)-sqrt(l))/(sqrt(L)+sqrt(l));
 

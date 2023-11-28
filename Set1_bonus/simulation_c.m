@@ -3,13 +3,13 @@ close all
 clc
 
 %% Construction of Quadratic Function
-n = 2;
-p = 1;
+n = 100;
+p = 20;
 
 A = randn(n,n);
 [U,S,V] = svd(A);
 
-L = 10;
+L = 100;
 l = 1;
 
 z = l + (L - l)*rand(n-2,1);

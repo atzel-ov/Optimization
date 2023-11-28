@@ -34,10 +34,6 @@ function [x, fun_value_x, rec] = accelerated_gradient_algorithm(P, q, x0, epsilo
             hold on
         end
 
-        if(k >= 1000)
-            break
-        end
-
     end
 
     rec = [k_rec; f_rec];

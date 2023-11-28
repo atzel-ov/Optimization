@@ -30,10 +30,6 @@ function [x, fun_value, rec] = gradient_algorithm(P, q, x0, epsilon, projection)
             hold on
         end
 
-        if(k >= 1000)
-            break
-        end
-
     end
 
     rec = [k_rec; f_rec];

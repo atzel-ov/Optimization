@@ -8,7 +8,7 @@ n = 2;
 A = randn(n,n);
 [U,S,V] = svd(A);
 
-L = 10;
+L = 100;
 l = 1;
 
 z = l + (L - l)*rand(n-2,1);
@@ -28,7 +28,7 @@ cvx_begin
     variables x(n);
     minimize(f(P,q,x));
     subject to 
-        -x <= 10^-8;
+        -x <= eps;
 
 cvx_end
 fprintf("============================================================================================\n\n")
@@ -44,7 +44,7 @@ plot(y, x, 'm--', LineWidth=1.3)
 axis([-7 7 -7 7])
 end
 
-x0 = 4*ones(n,1);
+x0 = 4*randn(n,1);
 epsilon = 10^-6;
 
 [x_opt1, p_opt1, rec1] = gradient_algorithm(P, q, x0, epsilon, @projection_a);
@@ -66,7 +66,7 @@ plot(y, x, 'm--', LineWidth=1.3)
 axis([-7 7 -7 7])
 end
 
-x0 = 4*ones(n,1);
+%x0 = -4*rand(n,1).*ones(n,1);
 epsilon = 10^-6;
 beta = (sqrt(L)-sqrt(l))/(sqrt(L)+sqrt(l));
 

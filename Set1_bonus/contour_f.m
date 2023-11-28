@@ -12,7 +12,7 @@ if(n == 2)
     end   
         
     figure
-    contour(X1,X2,quad,20)
+    contour(X1,X2,quad,20,'k')
     hold on
     axis tight
     xlabel('$x_1$','Interpreter','latex')
