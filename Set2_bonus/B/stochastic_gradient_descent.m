@@ -10,14 +10,11 @@ function [theta, fun_value, rec] = stochastic_gradient_descent(y, X, lambda, the
     while(norm(theta-theta_cvx)>epsilon)
 
         for i = 1:Ne
-            A = [y, X'];
-            rows = size(A,1);
-            P = randperm(rows);
-            B = A(P,:);
-            y_E = B(:,1);
-            X_E = B(:,2:end)';
+
+            [y_E, X_E] = shuffle_data(y, X);
+
             for j = 1:length(y)/Nb
-                
+
                 y_B = y_E((j-1)*Nb+1:j*Nb);
                 X_B = X_E(:,(j-1)*Nb+1:j*Nb);
 
