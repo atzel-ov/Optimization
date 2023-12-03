@@ -4,15 +4,24 @@ clc
 
 %% Data Generation
 
-N = 2;      % Dimensions
-n = 100;    % Data number
-std = 1.5;    % Standard deviation
+N = 2;          % Dimensions
+n = 500;        % Data number
+std = 1.2;      % Standard deviation
 
 w = 4*randn(N,1); b = 4*randn;
 
 [y, X] = generate_data(N, n, std, w, b, 'lr');
 
-data_separability(w, b, y, X);
+flag = data_separability(w, b, y, X);
+if (flag == 0)
+    fprintf("Data are not seperable. \n")
+else
+    fprintf("Data are seperable. \n")
+end
+
+if(N == 2)
+plot_data(w, b, y, X, 'default');
+end
 
 theta = [b; w];                 % Augmented parameters
 X_augm = [-ones(1,n); X];       % Augmented data
@@ -45,7 +54,7 @@ fprintf("The value of the function is p* = %f\n\n", J_opt1)
 fprintf("============================================================================================\n\n")
 
 if(N == 2)
-data_separability(theta_opt1(2:3), theta_opt1(1), y, X);
+plot_data(theta_opt1(2:3), theta_opt1(1), y, X, 'default');
 end
 
 %% Accelerated Gradient Descent (AGD) w/ Backtracking
@@ -56,22 +65,22 @@ fprintf("The value of the function is p* = %f\n\n", J_opt2)
 fprintf("============================================================================================\n\n")
 
 if(N == 2)
-data_separability(theta_opt2(2:3), theta_opt2(1), y, X);
+plot_data(theta_opt2(2:3), theta_opt2(1), y, X, 'default');
 end
 
 %% Stochastic Gradient Descent (SGD) 
 
-gamma = 0.3;                    % Learning Rate
-epoch_size = size(rec2, 2);     % Epoch size: number of iters od AGD
-batch_size = 10;                % Batch size
+gamma = 0.1;                    % Learning Rate
+epoch_size = size(rec2, 2);     % Epoch size: number of iters of AGD
+batch_size = 20;                % Batch size
 
 [theta_opt3, J_opt3, rec3] = stochastic_gradient_descent(y, X_augm, lambda, theta0, theta_cvx, epoch_size, batch_size, epsilon, gamma, k_max);
 
-fprintf("The value of the function is p* = %f\n\n", J_opt2)
+fprintf("The value of the function is p* = %f\n\n", J_opt3)
 fprintf("============================================================================================\n\n")
 
 if(N == 2)
-data_separability(theta_opt2(2:3), theta_opt2(1), y, X);
+plot_data(theta_opt3(2:3), theta_opt3(1), y, X, 'default');
 end
 
 %% Convergence Analysis

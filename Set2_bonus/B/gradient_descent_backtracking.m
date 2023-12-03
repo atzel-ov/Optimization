@@ -6,7 +6,7 @@ function [x, fun_value, rec] = gradient_descent_backtracking(y, X, lambda, x0, x
 
     e_rec = norm(x0-x_cvx);
     k_rec = k;
-
+    
     while(norm(grad) > epsilon)
         delta_x = -grad;
 
