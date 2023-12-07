@@ -5,8 +5,8 @@ clc
 %% Data Generation
 
 N = 2;          % Dimensions
-n = 500;        % Data number
-std = 1.2;      % Standard deviation
+n = 100;        % Data number
+std = 1.1;      % Standard deviation
 
 w = 4*randn(N,1); b = 4*randn;
 
@@ -25,14 +25,14 @@ end
 
 theta = [b; w];                 % Augmented parameters
 X_augm = [-ones(1,n); X];       % Augmented data
-lambda = 10^-2;                 % Regularization parameter
+lambda = 10^-1;                 % Regularization parameter
 
 cost = Jr(theta, lambda, y, X_augm);
 
-theta0 = 8*randn(N+1,1);
+theta0 = 8*randn(N+1,1);        % Initial condition
 
-epsilon = 0.01; k_max = 500;
-alpha = 0.1; beta = 0.7;
+epsilon = 0.01; k_max = 500;    % Stoppig condition parameters
+alpha = 0.1; beta = 0.7;        % Backtracking parameters
 
 %% CVX solution
 
@@ -70,11 +70,10 @@ end
 
 %% Stochastic Gradient Descent (SGD) 
 
-gamma = 0.1;                    % Learning Rate
 epoch_size = size(rec2, 2);     % Epoch size: number of iters of AGD
-batch_size = 20;                % Batch size
+batch_size = 10;                % Batch size
 
-[theta_opt3, J_opt3, rec3] = stochastic_gradient_descent(y, X_augm, lambda, theta0, theta_cvx, epoch_size, batch_size, epsilon, gamma, k_max);
+[theta_opt3, J_opt3, rec3] = stochastic_gradient_descent(y, X_augm, lambda, theta0, theta_cvx, epoch_size, batch_size, epsilon, k_max);
 
 fprintf("The value of the function is p* = %f\n\n", J_opt3)
 fprintf("============================================================================================\n\n")
@@ -95,4 +94,4 @@ xlabel('$k$', 'Interpreter', 'latex')
 ylabel('$\log \|\theta_k - \theta_{cvx}\|$', 'Interpreter', 'latex')
 legend('GD', 'AGD', 'SGD')
 grid on
-axis tight
+ylim([0 rec1(2,1)])
