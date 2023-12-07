@@ -2,10 +2,10 @@ clear
 close all
 clc
 
-%% Data Generation for hard-SVM
+%% Data Generation for Hard-SVM
 
-N = 2;            % Dimensions
-n = 100;          % Data number
+N = 2;              % Dimensions
+n = 100;            % Data number
 std = 1;          % Standard deviation
 
 w = 4*randn(N,1); b = 4*randn;
@@ -18,8 +18,9 @@ while(flag == 0)
         break;
     end
 end
+
 if(N == 2)
-plot_data(w, b, y, X);
+plot_data(w, b, y, X, 'default');
 end
 
 theta = [b; w];                 % Augmented parameters
@@ -32,7 +33,7 @@ end
 %% Hard-SVM w/ CVX
 
 cvx_begin   
-    variables w(N), b;
+    variables w(N) b;
     minimize(0.5*(w'*w));
     subject to
         for i = 1:n
@@ -44,7 +45,7 @@ fprintf("=======================================================================
 w_cvx = w; b_cvx = b;
 
 if(N == 2)
-plot_data(w_cvx, b_cvx, y, X);
+plot_data(w_cvx, b_cvx, y, X, 'svm');
 end
 
 %% Homogeneous Hard-SVM w/ CVX
@@ -62,7 +63,7 @@ fprintf("=======================================================================
 theta_cvx1 = theta;
 
 if(N == 2)
-plot_data(theta_cvx1(2:3), theta_cvx1(1), y, X);
+plot_data(theta_cvx1(2:3), theta_cvx1(1), y, X, 'svm');
 end
 
 %% Dual Homogeneous Hard-SVM w/ CVX
@@ -85,7 +86,7 @@ for i = 1:n
 end
 
 if(N == 2)
-plot_data(theta_cvx2(2:3), theta_cvx2(1), y, X);
+plot_data(theta_cvx2(2:3), theta_cvx2(1), y, X, 'svm');
 end
 
 %% Computing the primal through the Dual
