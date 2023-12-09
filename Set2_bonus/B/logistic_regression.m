@@ -6,7 +6,7 @@ clc
 
 N = 2;          % Dimensions
 n = 100;        % Data number
-std = 1.1;      % Standard deviation
+std = 1.3;      % Standard deviation
 
 w = 4*randn(N,1); b = 4*randn;
 
@@ -14,9 +14,9 @@ w = 4*randn(N,1); b = 4*randn;
 
 flag = data_separability(w, b, y, X);
 if (flag == 0)
-    fprintf("Data are not seperable. \n")
+    fprintf("Data are not separable. \n")
 else
-    fprintf("Data are seperable. \n")
+    fprintf("Data are separable. \n")
 end
 
 if(N == 2)
@@ -25,7 +25,7 @@ end
 
 theta = [b; w];                 % Augmented parameters
 X_augm = [-ones(1,n); X];       % Augmented data
-lambda = 10^-1;                 % Regularization parameter
+lambda = 10^-2;                 % Regularization parameter
 
 cost = Jr(theta, lambda, y, X_augm);
 
