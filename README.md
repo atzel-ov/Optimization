@@ -12,4 +12,4 @@
 
 >   <a href = "https://github.com/atzel-ov/Optimization/tree/main/Set2_bonus/B">Logistic Regression</a> - Optimization of the LR model using GD, Accelerated GD and Stochastic GD.
 
->   <a href = "https://github.com/atzel-ov/Optimization/tree/main/Set2_bonus/C">Support Vector Machines</a> - Hard-SVMs using CVX and Soft-SVMs using the Stochastic Subgradient Descent.
+>   <a href = "https://github.com/atzel-ov/Optimization/tree/main/Set2_bonus/C">Support Vector Machines</a> - Hard-SVMs using CVX and Soft-SVMs using Stochastic Subgradient Descent.
