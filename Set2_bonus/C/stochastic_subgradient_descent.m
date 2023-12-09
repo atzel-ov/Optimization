@@ -36,14 +36,13 @@ function [theta, fun_value, rec] = stochastic_subgradient_descent(y, X, lambda, 
 
         k = k + 1;
 
-        fun_value = f(theta, lambda, y_E, X_E);
+        fun_value = f(theta, lambda, y, X);
 
         e_rec = [e_rec, norm(theta-theta_cvx)];
         k_rec = [k_rec, k];
         
-        if(mod(k,5) == 0)
-            fprintf("Epoch: %d | f = %f\n", k, fun_value);
-        end
+
+        fprintf("Epoch: %d | f = %f\n", k, fun_value);
 
         if(k == k_max)
             break;

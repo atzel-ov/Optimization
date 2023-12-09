@@ -5,7 +5,7 @@ clc
 %% Data Generation for Soft-SVM
 
 N = 2;              % Dimensions
-n = 300;            % Data number
+n = 200;            % Data number
 std = 1.4;          % Standard deviation
 
 w = 4*randn(N,1); b = 4*randn;
@@ -22,7 +22,7 @@ X_augm = [-ones(1,n); X];       % Augmented data
 theta0 = 8*randn(N+1,1);
 
 epsilon = 0.01; k_max = 500; 
-lambda = 1;
+lambda = 10^-1;
 
 %% CVX solution
 
@@ -42,6 +42,7 @@ theta_cvx = theta;
 if(N == 2)
 plot_data(theta_cvx(2:3), theta_cvx(1), y, X, 'svm')
 end
+
 %% Stochastic Sungradient Descent (SSG)
 
 epoch_size = 100;
