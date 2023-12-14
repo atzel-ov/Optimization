@@ -2,11 +2,12 @@ function [] = plot_data(w, b, y, X, str)
 
 figure
 hold on
+
 for i = 1:length(y)
     if(y(i) == 1)
-        plot(X(1,i), X(2,i), 'bo')
-    else
         plot(X(1,i), X(2,i), 'rs')
+    else
+        plot(X(1,i), X(2,i), 'bo')
     end
 end
 

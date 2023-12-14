@@ -1,6 +1,6 @@
 function [y, X] = generate_data(N, n, std, w, b, str)
 
-    x0 = projection_H(eye(N,N), w', b, 4*randn(N,1));   % A point in the hyperplane (compute via a simple projection)
+    x0 = projection_H(eye(N,N), w', b, 4*randn(N,1));   % A point in the hyperplane (computed via a simple projection)
     
     
     gen = randn(n,1);
