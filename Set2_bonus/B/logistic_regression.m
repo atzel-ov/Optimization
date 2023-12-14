@@ -6,7 +6,7 @@ clc
 
 N = 2;          % Dimensions
 n = 100;        % Data number
-std = 1.3;      % Standard deviation
+std = 1.2;      % Standard deviation
 
 w = 4*randn(N,1); b = 4*randn;
 
@@ -23,16 +23,16 @@ if(N == 2)
 plot_data(w, b, y, X, 'default');
 end
 
-theta = [b; w];                 % Augmented parameters
-X_augm = [-ones(1,n); X];       % Augmented data
-lambda = 10^-2;                 % Regularization parameter
+theta = [b; w];                  % Augmented parameters
+X_augm = [-ones(1,n); X];        % Augmented data
+lambda = 10^-1;                  % Regularization parameter
 
 cost = Jr(theta, lambda, y, X_augm);
 
-theta0 = 8*randn(N+1,1);        % Initial condition
+theta0 = 8*randn(N+1,1);         % Initial condition
 
-epsilon = 0.01; k_max = 500;    % Stoppig condition parameters
-alpha = 0.1; beta = 0.7;        % Backtracking parameters
+epsilon = 0.01; k_max = 500;    % Stopping condition parameters
+alpha = 0.1; beta = 0.7;         % Backtracking parameters
 
 %% CVX solution
 
@@ -71,9 +71,9 @@ end
 %% Stochastic Gradient Descent (SGD) 
 
 epoch_size = size(rec2, 2);     % Epoch size: number of iters of AGD
-batch_size = 10;                % Batch size
+batch_size = 50;                % Batch size
 
-[theta_opt3, J_opt3, rec3] = stochastic_gradient_descent(y, X_augm, lambda, theta0, theta_cvx, epoch_size, batch_size, epsilon, k_max);
+[theta_opt3, J_opt3, rec3] = stochastic_gradient_descent(y, X_augm, lambda, theta0, theta_cvx, epoch_size, batch_size);
 
 fprintf("The value of the function is p* = %f\n\n", J_opt3)
 fprintf("============================================================================================\n\n")
@@ -86,9 +86,9 @@ end
 
 figure
 hold on
-semilogy(rec1(1,:), rec1(2,:), 'm', LineWidth=1.3)
-semilogy(rec2(1,:), rec2(2,:), 'g', LineWidth=1.3)
-semilogy(rec3(1,:), rec3(2,:), 'c', LineWidth=1.3)
+semilogy(rec1(1,:), rec1(2,:), 'mo-', LineWidth=1.1)
+semilogy(rec2(1,:), rec2(2,:), 'g+-', LineWidth=1.1)
+semilogy(rec3(1,:), rec3(2,:), 'cs-', LineWidth=1.1)
 hold off
 xlabel('$k$', 'Interpreter', 'latex')
 ylabel('$\log \|\theta_k - \theta_{cvx}\|$', 'Interpreter', 'latex')

@@ -1,4 +1,4 @@
-function [x, fun_value_x, rec] = accelerated_gradient_descent(y, X, lambda, x0, x_cvx, epsilon, alpha, beta, k_max)
+    function [x, fun_value_x, rec] = accelerated_gradient_descent(y, X, lambda, x0, x_cvx, epsilon, alpha, beta, k_max)
     
     x = x0; 
     z = x0;
@@ -11,17 +11,20 @@ function [x, fun_value_x, rec] = accelerated_gradient_descent(y, X, lambda, x0, 
     k_rec = k;
     
     %while(norm(x-x_cvx)/norm(x_cvx)>epsilon)
-    while(norm(z-t*grad_z-x )/norm(z-t*grad_z)>epsilon)
+    while((norm(z-t*grad_z-x )/norm(z-t*grad_z))>epsilon)
         delta_z = -grad_z;
 
-        t = 1;
-        while(Jr(z + t*delta_z,lambda,y,X) > Jr(z,lambda,y,X)+alpha*t*grad_z'*delta_z)
-            t = beta*t;
+        a = 1;
+        while(Jr(z + a*delta_z,lambda,y,X) > Jr(z,lambda,y,X)+alpha*a*grad_z'*delta_z)
+            a = beta*a;
         end
 
+        t_ = t;
+        t = 0.5*(1+sqrt(1+4*t^2));
+
         x_ = x;
-        x = z + t*delta_z;
-        z = x + beta*(x - x_);
+        x = z + a*delta_z;
+        z = x + ((t_-1)/t)*(x - x_);
 
         fun_value_x = Jr(x, lambda, y, X); grad_x = g(x, lambda, y, X);
         fun_value_z = Jr(z, lambda, y, X); grad_z = g(z, lambda, y, X);
