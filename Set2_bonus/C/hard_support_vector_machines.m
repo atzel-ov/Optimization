@@ -77,7 +77,15 @@ cvx_begin
         end
 cvx_end
 
-fprintf("Some of the lagrange multipliers are %f, %f, %f, %f  \n", a(1), a(10), a(20), a(40));
+fprintf("The essentially non-zero lagrange multipliers occure in the following indicies with corresponding data points :\n");
+for i = 1:length(a)
+
+    if (a(i) >= 1E-8)
+        fprintf(" ->  i = %d, x[%d] = (%f, %f)\n", i, i, X(1,i), X(2,i));
+    end
+
+end
+fprintf("\n")
 fprintf("============================================================================================\n\n")
 
 theta_cvx2 = 0;
