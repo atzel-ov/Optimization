@@ -31,7 +31,7 @@ cost = Jr(theta, lambda, y, X_augm);
 
 theta0 = 8*randn(N+1,1);         % Initial condition
 
-epsilon = 0.01; k_max = 500;    % Stopping condition parameters
+epsilon = 0.001; k_max = 500;    % Stopping condition parameters
 alpha = 0.1; beta = 0.7;         % Backtracking parameters
 
 %% CVX solution
@@ -46,6 +46,26 @@ cvx_end
 theta_cvx = theta;
 fprintf("============================================================================================\n\n")
 
+%% CVX solution for various lambdas // Run separably from the rest of the script as cvx is slow; 50 samples are used.
+lstr = {'\lambda'};
+fprintf("Press 1 to get the results for various lambdas\n")
+f = input(' ');
+if(f == 1)
+m = N+1;
+for lambda = [1, 0.1, 0.01, 0.001, 0]
+cvx_begin
+    
+    variable theta(m)
+    minimize(-(1/length(y)).*(y'*X_augm'*theta) + (1/length(y))*sum(log(1+exp(X_augm'*theta))) + lambda * 0.5*(theta'*theta))
+
+cvx_end
+plot_data(theta(2:3), theta(1), y, X, 'default');
+str = strcat(lstr,' = ', num2str(lambda));
+title(str)
+fprintf("============================================================================================\n\n")
+end
+end
+lambda = 10^-1;  
 %% Gradient Descent (GD) w/ Backtracking
 
 [theta_opt1, J_opt1, rec1] = gradient_descent_backtracking(y, X_augm, lambda, theta0, theta_cvx, epsilon, alpha, beta, k_max);
@@ -71,7 +91,7 @@ end
 %% Stochastic Gradient Descent (SGD) 
 
 epoch_size = size(rec2, 2);     % Epoch size: number of iters of AGD
-batch_size = 50;                % Batch size
+batch_size = 10;                % Batch size
 
 [theta_opt3, J_opt3, rec3] = stochastic_gradient_descent(y, X_augm, lambda, theta0, theta_cvx, epoch_size, batch_size);
 
@@ -85,13 +105,13 @@ end
 %% Convergence Analysis
 
 figure
+semilogy(rec1(1,:), rec1(2,:), 'm', LineWidth=1.1)
 hold on
-semilogy(rec1(1,:), rec1(2,:), 'mo-', LineWidth=1.1)
-semilogy(rec2(1,:), rec2(2,:), 'g+-', LineWidth=1.1)
-semilogy(rec3(1,:), rec3(2,:), 'cs-', LineWidth=1.1)
-hold off
+semilogy(rec2(1,:), rec2(2,:), 'g', LineWidth=1.1)
+hold on
+semilogy(rec3(1,:), rec3(2,:), 'c', LineWidth=1.1)
 xlabel('$k$', 'Interpreter', 'latex')
 ylabel('$\log \|\theta_k - \theta_{cvx}\|$', 'Interpreter', 'latex')
 legend('GD', 'AGD', 'SGD')
 grid on
-ylim([0 rec1(2,1)])
+axis tight
